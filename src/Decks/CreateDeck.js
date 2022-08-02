@@ -37,11 +37,11 @@ export default function CreateDeck() {
       <nav aria-label="Breadcrumb" className="breadcrumb">
         <ul>
           <li className="breadcrumb-item"><Link to='/'> Home</Link></li>
-          <li className="breadcrumb-item"><a href="">Create Deck</a></li>
+          <li className="breadcrumb-item"><Link to="/decks/new">Create Deck</Link></li>
         </ul>
       </nav>
         <h2>Create Deck</h2>
-        <form classname="createdeck-form">
+        <form className="createdeck-form">
           <label>Name
              <input required
                type="text" 
@@ -57,7 +57,6 @@ export default function CreateDeck() {
               type="text" 
               placeholder="Brief description of deck"
               id="description"
-              type="text"
               name="description"
               onChange={handleChange}
               value={newDeck.description}    

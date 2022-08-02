@@ -30,7 +30,7 @@ export default function Deck() {
       <nav aria-label="Breadcrumb" className="breadcrumb">
         <ul>
           <li className="breadcrumb-item"><Link to='/'> Home</Link></li>
-          <li className="breadcrumb-item"><a href="">{deckId}</a></li>
+          <li className="breadcrumb-item"><Link to="/decks/:deckId">{deckId}</Link></li>
         </ul>
       </nav>
     </div>
