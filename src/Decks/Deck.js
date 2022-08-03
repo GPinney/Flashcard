@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react"
 import {readDeck} from "../utils/api/index"
 import {Link, useHistory, useParams} from "react-router-dom"
-import decks from "../data/db.json"
-import cards from "../data/db.json"
 
-export default function Deck() {
+
+export default function Deck(props) {
   
   const[deck, setDeck] = useState()
   
-  const deckId = useParams().deckId
+  const deckId = props.deckId
   
     useEffect(() => {
     const abortController = new AbortController()

@@ -1,10 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom"
-import decks from "../data/db.json"
+
 
 import readDeck from "../utils/api/index"
+// remember to change something to actual deck name 
+export default function Study(props) {
 
-export default function Study() {
+  const deckId = props.deckId
   return (
     <div>
      
@@ -15,7 +17,8 @@ export default function Study() {
             </li>
 
             <li className="breadcrumb-item">
-              <Link to={`/decks/${deckId}`}>{deck.name}</Link>
+          
+              <Link to={`/decks/${deckId}`}>something</Link>
             </li>
 
             <li className="breadcrumb-item active">

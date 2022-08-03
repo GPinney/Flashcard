@@ -1,9 +1,7 @@
 import React from "react";
 import {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
-import Header from "../Layout/Header"
 import {createDeck} from "../utils/api/index"
-import decks from "../data/db.json"
 
 export default function CreateDeck() {
   
