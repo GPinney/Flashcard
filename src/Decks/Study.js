@@ -1,13 +1,35 @@
 import React from "react";
 import {Link} from "react-router-dom"
+import { readDeck } from "../utils/api/index.js"
+import { useEffect, useState } from "react";
+import Cards from "./Cards"
+
+ 
 
 
-import readDeck from "../utils/api/index"
-// remember to change something to actual deck name 
 export default function Study(props) {
 
+  const [deck, setDeck] = useState({})
   const deckId = props.deckId
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    async function findDeck() {
+      const currentDeck = await readDeck(deckId, abortController.signal)
+      setDeck(currentDeck);
+    }
+
+    findDeck();
+    return () => abortController.abort();
+  }, [deckId]);
+
+
+
+
+
+
   return (
+    <div>
     <div>
      
        <nav aria-label="breadcrumb">
@@ -18,7 +40,7 @@ export default function Study(props) {
 
             <li className="breadcrumb-item">
           
-              <Link to={`/decks/${deckId}`}>something</Link>
+              <Link to={`/decks/${deckId}`}>{deck.name}</Link>
             </li>
 
             <li className="breadcrumb-item active">
@@ -26,6 +48,15 @@ export default function Study(props) {
             </li>
           </ol>
         </nav>
+      </div>
+
+      <div>
+      <h1>{deck.name}</h1>
+      </div>
+      <div>
+        <Cards />
+      </div>
+
       </div>
     )
 }
