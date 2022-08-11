@@ -3,12 +3,24 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 export default function Cards({ cards }) {
   const [currentCard, setCurrentCard] = useState(0);
+  const[deck, setDeck]= useState()
   const [frontSide, setFrontSide] = useState(true);
   const { deckId } = useParams();
   const history = useHistory();
 
   const nextHandler = () => {
-    if (currentCard === cards.length - 1) {
+    if(currentCard + 1 === deck.cards.length) { 
+      if(window.confirm(`Restart cards?\n\nClick 'cancel' to return to the home page.`)) { 
+        setCurrentCard(0); 
+      } else { 
+        history.push("/"); 
+      } 
+    } 
+      else { 
+        setCurrentCard(currentCard + 1); 
+      }
+    }
+    /*if (currentCard + 1 === deck.cards.length) {
       window.confirm(
         "Click OK to restart the deck, or CANCEL to return to the homepage."
       )
@@ -18,19 +30,19 @@ export default function Cards({ cards }) {
       setCurrentCard((currentCard) => currentCard + 1);
       setFrontSide(() => !frontSide);
     }
-  };
+  }; */
 
   const flipHandler = () => {
     setFrontSide(() => !frontSide);
   };
 
-  if (cards.length > 2) {
+  if (deck.cards.length > 2) {
     return (
       <div className="row p-3">
         <div className="card w-100">
           <div className="card-body">
             <h5 className="card-title">
-              Card {currentCard + 1} of {cards.length}
+              Card {currentCard + 1} of {deck.cards.length}
             </h5>
 
             <p className="card-text">
