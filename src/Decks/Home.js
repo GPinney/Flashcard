@@ -12,8 +12,8 @@ const controller = new AbortController();
 
 useEffect(() => {
 async function getAllDecks() {
-  const allDecks = await listDecks(controller.signal)
-  setDecks(allDecks)
+  const decks = await listDecks(controller.signal)
+  setDecks(decks)
 }
 getAllDecks()
 },[])
@@ -28,11 +28,12 @@ getAllDecks()
   <div className="row w-100 mx-auto">
     {decks.map((deck) => (
       <DeckList key={deck.id} deck={deck} />
+      
     ))}
   </div>
 </div>
 );
-}
+} 
     /*<div>
        <Link className="btn btn-secondary mb-2" to="/decks/new">
           <button type="button" className="deckBtn">+ Create Deck</button>

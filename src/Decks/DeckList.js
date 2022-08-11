@@ -52,4 +52,55 @@ function DeckList({ deck }) {
   );
 }
 
-export default DeckList;
+export default DeckList; 
+
+/*export default function DeckList({decks, setdecks}){
+  const handleDelete = (id)=>{
+    if(
+      window.confirm("Delete this deck?\n\nYou will not be able to recover it")
+    ) {
+      deleteDeck(id);
+      setdecks(decks.filter((deck) => deck.id !== id));
+    }
+  }
+
+
+return(
+  <div>
+    {decks.map((deck) =>(
+      <div key={deck.id} style={{marginBottom: 20 }}>
+        <div className ="card">
+          <div className = "card-body">
+            <p>{deck.cards.length} cards</p>
+            <h2>{deck.name}</h2>
+            <p>{deck.description}</p>
+            <Link to={`/decks/${deck.id}`}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                style={{ marginRight: 10}} >
+                  View
+                </button>
+            </Link>
+            <Link to={`/decks/${deck.id}/study`}>
+              <button type="button" className="btn btn-primary">
+                Study
+              </button>
+
+            </Link>
+            
+            <button 
+              className ="btn btn-danger"
+              style={{float: "right"}}
+              onClick={() => handleDelete(deck.id)} 
+              >
+                Delete
+              </button>
+            </div>
+
+          </div>
+        </div>
+    ))}
+  </div>
+)
+} */
