@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import { readDeck } from "../utils/api/index.js"
 import { useEffect, useState } from "react";
 import Cards from "./Cards"
@@ -7,10 +7,10 @@ import Cards from "./Cards"
  
 
 
-export default function Study(props) {
+export default function Study() {
 
   const [deck, setDeck] = useState({})
-  const deckId = props.deckId
+  const {deckId} = useParams()
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -51,10 +51,10 @@ export default function Study(props) {
       </div>
 
       <div>
-      <h1>{deck.name}</h1>
+      <h1>{deck.name}: Study</h1>
       </div>
       <div>
-        <Cards />
+        <Cards cards={deck.cards} />
       </div>
 
       </div>

@@ -1,74 +1,151 @@
-import React, {useEffect, useState} from "react"
-import { deleteCard, readDeck, deleteDeck } from "../utils/api/index"
-import {Link, useHistory, useParams} from "react-router-dom"
-
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useHistory, useRouteMatch } from "react-router-dom";
+import { deleteCard, readDeck, deleteDeck } from "../utils/api/index";
 
 export default function Deck() {
- 
-  
-  const[deck, setDeck] = useState()
+  const [deck, setDeck] = useState([]);
   const { deckId } = useParams();
-  const history = useHistory()
-  
-  
-  
-    useEffect(() => {
-    const abortController = new AbortController() 
-    const loadDeck = async () => {
-      const response = await readDeck(deckId, abortController.signal)
-      setDeck(() => response);
-    }
+  const history = useHistory();
+  const { url } = useRouteMatch();
+  const { id, name, description, cards } = deck;
 
-    loadDeck();
+  useEffect(() => {
+    const abortController = new AbortController();
+    const deckInfo = async () => {
+      const response = await readDeck(deckId, abortController.signal);
+      setDeck(() => response);
+    };
+    deckInfo();
     return () => abortController.abort();
   }, [deckId]);
 
- 
   const deleteHandler = async () => {
     if (
       window.confirm(
         "Are you sure you want to delete this deck? You will not be able to recover it."
       )
     ) {
-      await deleteDeck(deck.id);
+      await deleteDeck(id);
       history.push("/");
     } 
     else {
       history.go(0);
     }
   };
-    
 
-  
-  return (
-   <div>
-    <div>
-      <nav aria-label="Breadcrumb" className="breadcrumb">
-        <ul>
-          <li className="breadcrumb-item"><Link to='/'> Home</Link></li>
-          <li className="breadcrumb-item"><Link to="/decks/:deckId">{deckId}</Link></li>
-        </ul>
-      </nav>
-    </div>
-    <div>
-      <h4>{deck.name}</h4>
-      <p>{deck.description}</p>
-      <button>Edit</button>
-      <button>Study</button>
-      <button>+Add Cards</button>
-      <button onClick={deleteHandler}
+  if (!deck || !cards) {
+    return (
+      <div className="spinner-border text-primary" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
+  } else {
+    return (
+      <div className="col-9 mx-auto">
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to={"/"}>Home</Link>
+            </li>
+
+            <li className="breadcrumb-item">{name}</li>
+          </ol>
+        </nav>
+
+        <div className="card border-0 mb-4">
+          <div className="card-body">
+            {/* deck name */}
+            <div className="row px-3">
+              <h5 className="card-title">{name}</h5>
+            </div>
+
+            {/* deck description */}
+            <p className="card-text">{description}</p>
+
+            <div className="row px-3">
+              {/* edit button */}
+              <Link to={`/decks/${id}/edit`} className="btn btn-secondary">
+                Edit
+              </Link>
+
+              {/* study button */}
+              <Link to={`/decks/${id}/study`} className="btn btn-primary ml-3">
+                Study
+              </Link>
+
+              {/* add cards button */}
+              <Link
+                to={`/decks/${id}/cards/new`}
+                className="btn btn-primary ml-3"
+              >
+                Add Cards
+              </Link>
+
+              {/* delete button */}
+              <button
+                onClick={deleteHandler}
+                name="delete"
+                value={id}
+                className="btn btn-danger ml-auto"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="row pl-3 pb-2">
+          <h1>Cards</h1>
+        </div>
+
+        {cards.map((card, index) => (
+          <div className="row" key={index}>
+            <div className="col">
+              <div className="card">
+                <div className="row card-body">
+                  {/* front */}
+                  <p className="col-6 card-text">{card.front}</p>
+
+                  {/* back */}
+                  <p className="col-6 card-text">{card.back}</p>
+                </div>
+
+                <div className="d-flex justify-content-end p-4">
+                  {/* edit button */}
+                  <Link
+                    to={`${url}/cards/${card.id}/edit`}
+                    className="btn btn-secondary"
+                  >
+                    <i className="fa fa-edit" aria-hidden="true"></i>
+                    Edit
+                  </Link>
+
+                  <button
+                    onClick={async () => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this card? You will not be able to recover it."
+                        )
+                      ) {
+                        await deleteCard(card.id);
+                        history.go(0);
+                      } else {
+                        history.go(0);
+                      }
+                    }}
                     name="deleteCard"
-                    value={deck.card.id}
+                    value={card.id}
                     className="btn btn-danger ml-3"
                   >
-                    Delete </button>
-    </div> 
-    <div>
-      <h2>Cards</h2>
-    </div>
-    <div>
-      <h1>Not Found</h1>
-    </div>
-   </div>
-  );
-} 
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
