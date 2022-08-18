@@ -8,9 +8,10 @@ import DeckList from "./DeckList"
 export default function Home(){
 
 const [decks, setDecks] = useState([])
-const controller = new AbortController();
+
 
 useEffect(() => {
+const controller = new AbortController();
 async function getAllDecks() {
   const decks = await listDecks(controller.signal)
   setDecks(decks)
