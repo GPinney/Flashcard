@@ -3,7 +3,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 export default function Cards({ cards }) {
   const [currentCard, setCurrentCard] = useState(0);
-  //const[deck, setDeck]= useState()
+  
   const [frontSide, setFrontSide] = useState(true);
   const { deckId } = useParams();
   const history = useHistory();

@@ -1,7 +1,7 @@
 
 import React, {useState, useEffect} from "react"
-import {listDecks} from "../utils/api"
 import {Link} from "react-router-dom"
+import {listDecks} from "../utils/api"
 import DeckList from "./DeckList"
 
 

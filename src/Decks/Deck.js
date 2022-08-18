@@ -54,26 +54,25 @@ export default function Deck() {
 
         <div className="card border-0 mb-4">
           <div className="card-body">
-            {/* deck name */}
+            
             <div className="row px-3">
               <h5 className="card-title">{name}</h5>
             </div>
 
-            {/* deck description */}
+           
             <p className="card-text">{description}</p>
 
             <div className="row px-3">
-              {/* edit button */}
+           
               <Link to={`/decks/${id}/edit`} className="btn btn-secondary">
                 Edit
               </Link>
 
-              {/* study button */}
               <Link to={`/decks/${id}/study`} className="btn btn-primary ml-3">
                 Study
               </Link>
 
-              {/* add cards button */}
+            
               <Link
                 to={`/decks/${id}/cards/new`}
                 className="btn btn-primary ml-3"
@@ -81,7 +80,7 @@ export default function Deck() {
                 Add Cards
               </Link>
 
-              {/* delete button */}
+             
               <button
                 onClick={deleteHandler}
                 name="delete"
@@ -103,15 +102,15 @@ export default function Deck() {
             <div className="col">
               <div className="card">
                 <div className="row card-body">
-                  {/* front */}
+                 
                   <p className="col-6 card-text">{card.front}</p>
 
-                  {/* back */}
+                  
                   <p className="col-6 card-text">{card.back}</p>
                 </div>
 
                 <div className="d-flex justify-content-end p-4">
-                  {/* edit button */}
+                 
                   <Link
                     to={`${url}/cards/${card.id}/edit`}
                     className="btn btn-secondary"
