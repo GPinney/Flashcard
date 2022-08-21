@@ -51,7 +51,7 @@ export default function CreateDeck() {
            </label>
           <label>Description
             <input 
-              type="text" 
+              textarea="text" 
               placeholder="Brief description of deck"
               id="description"
               name="description"
